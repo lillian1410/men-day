@@ -76,7 +76,9 @@ button:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
 
     /* Screen 5: individual greeting */
 .bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--blush)}
-.bg::after{content:"";position:absolute;inset:0;background:rgba(252,247,240,.25)}
+.bg::after{
+  content:none;
+}
 .greet-msg{white-space:pre-line;margin-top:18px;min-height:90px}
 .greet-msg.empty{opacity:.7;font-style:italic}
 
