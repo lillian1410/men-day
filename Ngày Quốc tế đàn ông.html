@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ngày Quốc tế đàn ông</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+:root{--blush:#F6C6D2;--rose:#E08CA5;--sky:#BFE2F4;--deep:#2F5D78;--paper:#FCF7F0;--wax:#A8405C}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%}
+body{font-family:"Be Vietnam Pro",system-ui,sans-serif;color:var(--deep);background:linear-gradient(160deg,var(--blush) 0%,#fff 50%,var(--sky) 100%);overflow:hidden}
+
+/* Screens */
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top)) 18px max(20px,env(safe-area-inset-bottom));opacity:0;visibility:hidden;transition:opacity .6s ease,visibility .6s;overflow-y:auto}
+.screen.active{opacity:1;visibility:visible}
+.card{position:relative;width:100%;max-width:520px;padding:30px 24px;background:var(--paper);border-radius:20px;text-align:center;box-shadow:0 14px 40px rgba(47,93,120,.18)}
+.card::before{content:"";position:absolute;inset:9px;border:1px dashed var(--rose);border-radius:13px;pointer-events:none;opacity:.7}
+.card.pastel{background:linear-gradient(160deg,#FDE3EC,#E4F5FD)}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.2)}60%{opacity:1;transform:scale(1.12)}80%{transform:scale(.96)}100%{opacity:1;transform:scale(1)}}
+
+/* Type and atoms */
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;line-height:1.2;margin:0 0 14px}
+h2{font-size:clamp(1.55rem,5.5vw,2.1rem)}
+p{margin:0;line-height:1.7;font-size:1.02rem}
+.orn{width:72px;height:1px;margin:0 auto 18px;background:linear-gradient(90deg,transparent,var(--rose),transparent)}
+.msg{color:var(--wax);font-size:.95rem;min-height:1.4em;margin-top:10px}
+.row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:26px;min-height:64px;align-items:center}
+
+/* Buttons */
+button{position:relative;font:inherit;font-weight:600;min-height:50px;padding:12px 26px;border:0;border-radius:999px;background:var(--rose);color:#fff;cursor:pointer;touch-action:manipulation;transition:transform .2s ease,background .2s ease,box-shadow .2s ease}
+button:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(224,140,165,.4)}
+button:active{transform:scale(.97)}
+button:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+button:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
+.alt{background:var(--sky);color:var(--deep)}
+.dodge{transition:left .25s ease,top .25s ease}
+
+/* Screen 1: envelope and apology letter */
+.env-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:24px;transition:opacity .6s ease,transform .6s ease}
+.env-wrap.gone{opacity:0;transform:translateY(-30px);pointer-events:none}
+.env{position:relative;width:min(84vw,300px);aspect-ratio:3/2;cursor:pointer;outline:none;filter:drop-shadow(0 12px 18px rgba(47,93,120,.22))}
+.env:focus-visible{outline:3px solid var(--sky);outline-offset:6px;border-radius:8px}
+.env-back,.env-front,.flap{position:absolute;left:0;width:100%}
+.env-back{inset:0;border-radius:8px;z-index:1;background:linear-gradient(135deg,#FBDCE6,#F3B5C7);box-shadow:inset 0 0 0 6px rgba(255,255,255,.45)}
+.letter{position:absolute;left:9%;top:10%;width:82%;height:80%;z-index:2;border-radius:4px;background:var(--paper);background-image:repeating-linear-gradient(transparent 0 22px,rgba(191,226,244,.55) 22px 23px);transition:transform 1s ease .5s}
+.env-front{inset:0;z-index:3;border-radius:8px;background:linear-gradient(160deg,#CDEBFA,#A8D8F0);clip-path:polygon(0 36%,50% 68%,100% 36%,100% 100%,0 100%)}
+.flap{top:0;height:52%;z-index:4;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#F9D3DF,#F1B4C6);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .8s cubic-bezier(.5,0,.3,1) .1s,opacity .4s ease .7s}
+.seal{position:absolute;left:50%;top:52%;width:60px;height:60px;margin:-30px 0 0 -30px;z-index:5;border-radius:50%;display:grid;place-items:center;color:#FFE9EF;font-size:22px;background:radial-gradient(circle at 35% 30%,#D9768F,var(--wax) 70%);box-shadow:0 4px 10px rgba(80,20,35,.35),inset 0 -3px 6px rgba(0,0,0,.2);transition:transform .4s ease,opacity .4s ease}
+.env:not(.open):hover .seal{transform:scale(1.08)}
+.env.open .flap{transform:rotateX(180deg);opacity:0}
+.env.open .letter{transform:translateY(-120px)}
+.env.open .seal{transform:scale(1.5);opacity:0}
+.hint{font-size:.95rem;opacity:.75;margin:0}
+.letter-card{opacity:0;visibility:hidden;transform:translateY(16px);transition:opacity 1.2s ease,transform 1.2s ease,visibility 0s linear 1.2s}
+.letter-card.show{opacity:1;visibility:visible;transform:none;transition:opacity 1.2s ease,transform 1.2s ease,visibility 0s}
+.letter-text{white-space:pre-line;text-align:left;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.2rem;line-height:1.75;margin-bottom:6px}
+
+/* Screen 3: celebration */
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+.headline{opacity:0;max-width:20ch;margin:0 auto;text-align:center;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(2.1rem,9vw,3.8rem);line-height:1.15;color:var(--deep)}
+.headline.play{animation:pop 1.1s cubic-bezier(.34,1.56,.64,1) .35s forwards}
+.exit{position:absolute;bottom:max(28px,env(safe-area-inset-bottom));left:0;right:0;margin:auto;width:max-content;min-height:44px;padding:8px 14px;background:none;color:var(--deep);box-shadow:none;opacity:.55;font-weight:400;font-size:.95rem}
+.exit:hover{opacity:1;transform:none;box-shadow:none}
+
+/* Screen 4: name selection */
+.names{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 0}
+.name-opt{min-height:56px;padding:10px;background:#fff;color:var(--deep);border:1.5px solid var(--sky);border-radius:14px;font-weight:600;box-shadow:none}
+.name-opt.sel{background:var(--deep);color:#fff;border-color:var(--deep)}
+.name-opt:hover{box-shadow:0 6px 14px rgba(47,93,120,.15)}
+
+/* Screen 5: individual greeting */
+.bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--blush)}
+.bg::after{content:"";position:absolute;inset:0;background:rgba(252,247,240,.25)}
+.greet-msg{white-space:pre-line;margin-top:18px;min-height:90px}
+.greet-msg.empty{opacity:.7;font-style:italic}
+
+/* Screen 6b: confession form */
+textarea{width:100%;min-height:200px;resize:vertical;font:inherit;font-size:1rem;line-height:1.6;padding:16px;border:1.5px solid var(--sky);border-radius:16px;background:#fff;color:var(--deep);outline:none}
+textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5)}
+.send-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}
+.cnt{font-size:.85rem;opacity:.7}
+.send-row button{margin-left:auto}
+.screen.active #formBlock{animation:rise .6s ease both}
+#thanksBlock:not([hidden]){animation:rise .6s ease both}
+
+/* Screen 7: final message */
+.final{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.45rem;line-height:1.5}
+.final-thanks{margin-top:18px;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:1.6rem;color:var(--wax)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- SCREEN 1: envelope and apology letter -->
+<section class="screen active" id="s-letter">
+  <div class="env-wrap" id="envWrap">
+    <div class="env" id="env" role="button" tabindex="0" aria-label="Mở thư">
+      <div class="env-back"></div>
+      <div class="letter"></div>
+      <div class="env-front"></div>
+      <div class="flap"></div>
+      <div class="seal">♥</div>
+    </div>
+    <p class="hint">Chạm vào con dấu sáp để mở thư nhé</p>
+  </div>
+  <div class="card letter-card" id="letterCard">
+    <div class="orn"></div>
+    <p class="letter-text" id="apologyText"></p>
+    <div class="row"><button id="letterNext">Tiếp theo</button></div>
+  </div>
+</section>
+
+<!-- SCREEN 2: forgiveness -->
+<section class="screen" id="s-forgive">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Bạn có chấp nhận lời xin lỗi không?</h2>
+    <div class="row">
+      <button class="dodge alt" id="noBtn">Không</button>
+      <button id="yesBtn">Oki tha lỗi nha</button>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 3: celebration -->
+<section class="screen" id="s-celebrate">
+  <h1 class="headline" id="headline">Chúc mừng 6 anh tài ngày quốc tế đàn ông (Toilet's Day)</h1>
+  <button class="exit" id="exitBtn">Nhấp để thoát</button>
+</section>
+
+<!-- SCREEN 4: identity -->
+<section class="screen" id="s-pick">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Bạn là ai trong 6 anh tài?</h2>
+    <div class="names" id="names"></div>
+    <p class="msg" id="pickMsg" role="alert"></p>
+    <div class="row"><button id="pickNext">Tiếp</button></div>
+  </div>
+</section>
+
+<!-- SCREEN 5: individual greeting -->
+<section class="screen" id="s-greet">
+  <div class="bg" id="greetBg"></div>
+  <div class="card pastel">
+    <div class="orn"></div>
+    <h2 id="greetName"></h2>
+    <p class="greet-msg" id="greetMsg"></p>
+    <div class="row">
+      <button id="readBtn">Bạn đọc xong chưa</button>
+      <button id="doneBtn" class="alt" hidden>Xong rùi aaa</button>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 6: shared confession question -->
+<section class="screen" id="s-ask">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Các anh tài có muốn thổ lộ tình cảm gì với ba chị đẹp hong?</h2>
+    <div class="row">
+      <button class="dodge alt" id="noAsk">Đéo</button>
+      <button id="yesAsk">Có aaa</button>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 6b: confession input -->
+<section class="screen" id="s-confess">
+  <div class="card">
+    <div id="formBlock">
+      <div class="orn"></div>
+      <textarea id="ta" maxlength="2000" placeholder="Viết lời thổ lộ của anh ở đây nhé..."></textarea>
+      <div class="send-row">
+        <span class="cnt" id="cnt">0/2000</span>
+        <button id="sendBtn">Gửi</button>
+      </div>
+      <p class="msg" id="sendErr" role="alert"></p>
+    </div>
+    <div id="thanksBlock" hidden>
+      <div class="orn"></div>
+      <h2>Các chị đẹp nhận được tình cảm của các anh tài rùi nha</h2>
+      <div class="row"><button id="thanksNext">Tiếp</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREEN 7: final message -->
+<section class="screen" id="s-final">
+  <div class="card pastel">
+    <div class="orn"></div>
+    <p class="final">Và để lưu giữ lại khoảnh khắc này thì 6 anh ra góc xinh xinh để lưu giữ những khoảnh khắc dễ thương này nhé</p>
+    <p class="final-thanks">Cảm ơn mấy anh nhìuuu</p>
+  </div>
+</section>
+
+<script>
+/* ===== EDITABLE CONTENT ===== */
+// Replace this apology text with the final letter.
+const APOLOGY_TEXT = `Gửi các anh tài thân mến,
+
+Lẽ ra buổi kỷ niệm Ngày Quốc tế đàn ông (19/11) đã được tổ chức đúng dịp, nhưng mình đã chuẩn bị muộn mất rồi. Vì vậy buổi kỷ niệm sẽ được tổ chức vào ngày 21/11.
+
+Mong các anh thông cảm và bỏ qua cho mình nhé!`;
+
+// Fill in `image` (e.g. 'images/quan.jpg') and `greeting` for each person.
+const PEOPLE = [
+  { name: 'Lê Hồng Quân',    image: '', greeting: '' },
+  { name: 'Lê Ngọc Khánh',   image: '', greeting: '' },
+  { name: 'Lê Viết Thái Duy', image: '', greeting: '' },
+  { name: 'Lê Nhật Phong',   image: '', greeting: '' },
+  { name: 'Lê Văn Tú',       image: '', greeting: '' },
+  { name: 'Phạm Xuân Thành', image: '', greeting: '' },
+];
+
+const TONES = [['#F6C6D2', '#BFE2F4'], ['#BFE2F4', '#F9D5E0'], ['#FBDDE7', '#A8D8F0']];
+const COLORS = ['#F6C6D2', '#E08CA5', '#BFE2F4', '#8CC8E8', '#FFFFFF', '#F3E3B0'];
+
+/* ===== HELPERS ===== */
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const state = { idx: -1 };
+let busy = false, sent = false;
+
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === id));
+}
+
+/* ===== SCREEN 1: envelope ===== */
+$('#apologyText').textContent = APOLOGY_TEXT;
+$('#env').addEventListener('click', openEnv);
+$('#env').addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnv(); }
+});
+function openEnv() {
+  const env = $('#env');
+  if (env.classList.contains('open')) return;
+  env.classList.add('open');
+  setTimeout(() => $('#envWrap').classList.add('gone'), 1500);
+  setTimeout(() => {
+    $('#envWrap').hidden = true;
+    $('#letterCard').classList.add('show');
+  }, 2100);
+}
+$('#letterNext').onclick = () => go('s-forgive');
+
+/* ===== DODGE BUTTONS (Không, Đéo) ===== */
+function dodge(btn) {
+  const max = Math.max(40, Math.min(110, btn.parentElement.clientWidth / 3));
+  btn.style.left = Math.round((Math.random() * 2 - 1) * max) + 'px';
+  btn.style.top = Math.round((Math.random() * 2 - 1) * 26) + 'px';
+}
+document.querySelectorAll('.dodge').forEach(btn => {
+  ['pointerenter', 'pointerdown', 'click'].forEach(ev =>
+    btn.addEventListener(ev, e => { e.preventDefault(); dodge(btn); }));
+});
+
+/* ===== SCREEN 2 → 3 ===== */
+$('#yesBtn').onclick = () => { go('s-celebrate'); startCelebration(); };
+
+/* ===== SCREEN 3: confetti ===== */
+const cv = $('#confetti'), cx = cv.getContext('2d');
+let parts = [], raf = null, celebrating = false, tk = 0;
+function fit() {
+  const d = devicePixelRatio || 1;
+  cv.width = innerWidth * d; cv.height = innerHeight * d;
+  cx.setTransform(d, 0, 0, d, 0, 0);
+}
+fit(); addEventListener('resize', fit);
+
+function burst(dir) {
+  const W = innerWidth, H = innerHeight;
+  for (let k = 0; k < 3; k++) parts.push({
+    x: dir < 0 ? 0 : W, y: H * 0.92,
+    vx: -dir * (4 + Math.random() * 7), vy: -(11 + Math.random() * 9),
+    s: 6 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3,
+    c: COLORS[(Math.random() * COLORS.length) | 0]
+  });
+}
+function tick() {
+  cx.clearRect(0, 0, innerWidth, innerHeight);
+  if (celebrating && ++tk % 5 === 0) { burst(-1); burst(1); }
+  for (const p of parts) {
+    p.vx *= 0.992; p.vy += 0.3; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+    cx.save(); cx.translate(p.x, p.y); cx.rotate(p.r); cx.fillStyle = p.c;
+    cx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2);
+    cx.restore();
+  }
+  parts = parts.filter(p => p.y < innerHeight + 40);
+  raf = celebrating || parts.length ? requestAnimationFrame(tick) : null;
+}
+function startCelebration() {
+  const h = $('#headline');
+  h.classList.remove('play'); void h.offsetWidth; h.classList.add('play');
+  if (!reduce) { celebrating = true; if (!raf) raf = requestAnimationFrame(tick); }
+}
+function stopConfetti() {
+  celebrating = false; parts = [];
+  if (raf) cancelAnimationFrame(raf);
+  raf = null;
+  cx.clearRect(0, 0, innerWidth, innerHeight);
+}
+$('#exitBtn').onclick = () => { stopConfetti(); go('s-pick'); };
+
+/* ===== SCREEN 4: identity ===== */
+const names = $('#names');
+PEOPLE.forEach((p, i) => {
+  const b = document.createElement('button');
+  b.className = 'name-opt';
+  b.textContent = p.name;
+  b.setAttribute('aria-pressed', 'false');
+  b.onclick = () => {
+    state.idx = i;
+    names.querySelectorAll('button').forEach(x => {
+      const on = x === b;
+      x.classList.toggle('sel', on);
+      x.setAttribute('aria-pressed', on);
+    });
+    $('#pickMsg').textContent = '';
+  };
+  names.appendChild(b);
+});
+$('#pickNext').onclick = () => {
+  if (state.idx < 0) { $('#pickMsg').textContent = 'Anh chọn tên của mình trước nhé.'; return; }
+  renderGreet();
+  go('s-greet');
+};
+
+/* ===== SCREEN 5: individual greeting ===== */
+function renderGreet() {
+  const p = PEOPLE[state.idx], t = TONES[state.idx % TONES.length];
+  const grad = `linear-gradient(135deg, ${t[0]}, ${t[1]})`;
+  const bg = $('#greetBg');
+  bg.style.backgroundImage = grad;
+  if (p.image) {
+    // Fall back to the gradient silently if the photo fails to load.
+    const im = new Image();
+    im.onload = () => { bg.style.backgroundImage = `url("${p.image}"), ${grad}`; };
+    im.src = p.image;
+  }
+  $('#greetName').textContent = p.name;
+  const msg = $('#greetMsg');
+  msg.textContent = p.greeting || 'Lời chúc sẽ sớm được cập nhật nhé.';
+  msg.classList.toggle('empty', !p.greeting);
+  $('#readBtn').hidden = false;
+  $('#doneBtn').hidden = true;
+}
+$('#readBtn').onclick = () => { $('#readBtn').hidden = true; $('#doneBtn').hidden = false; };
+$('#doneBtn').onclick = () => go('s-ask');
+
+/* ===== SCREEN 6: shared confession ===== */
+$('#yesAsk').onclick = () => go('s-confess');
+
+const ta = $('#ta'), cnt = $('#cnt'), sendBtn = $('#sendBtn'), err = $('#sendErr');
+ta.addEventListener('input', () => { cnt.textContent = `${ta.value.length}/${ta.maxLength}`; });
+sendBtn.onclick = submit;
+
+async function submit() {
+  const text = ta.value.trim();
+  if (busy || sent) return;
+  if (!text) { err.textContent = 'Anh viết lời thổ lộ trước khi gửi nhé.'; return; }
+  busy = true;
+  sendBtn.disabled = true;
+  sendBtn.textContent = 'Đang gửi...';
+  err.textContent = '';
+  try {
+    // Backend endpoint: not included in this file. Server must validate,
+    // stamp the Asia/Ho_Chi_Minh time, and append one row to the private sheet.
+    const res = await fetch('/api/confessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sender: PEOPLE[state.idx].name, content: text })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    sent = true;
+    $('#formBlock').hidden = true;
+    $('#thanksBlock').hidden = false;
+  } catch (e) {
+    err.textContent = 'Gửi chưa thành công. Nội dung của anh vẫn còn đó, anh bấm Gửi lại nhé.';
+  } finally {
+    busy = false;
+    sendBtn.disabled = false;
+    sendBtn.textContent = 'Gửi';
+  }
+}
+$('#thanksNext').onclick = () => go('s-final');
+</script>
+</body>
+</html>
