@@ -73,38 +73,7 @@ button:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
 .name-opt.sel{background:var(--deep);color:#fff;border-color:var(--deep)}
 .name-opt:hover{box-shadow:0 6px 14px rgba(47,93,120,.15)}
 
-/* ===== SCREEN 5: lace paper shape ===== */
-(function drawPaper() {
-  const card = document.querySelector('.lace-card');
-  if (!card) return;
-  const N = 22, cx = 200, cy = 250, rx = 186, ry = 236, k = 1.07;
-  const at = (r, t) => [cx + rx * r * Math.cos(t), cy + ry * r * Math.sin(t)];
-  const f = p => p[0].toFixed(1) + ' ' + p[1].toFixed(1);
-  let d = '', hearts = '';
-  for (let i = 0; i < N; i++) {
-    const t0 = 2 * Math.PI * i / N - Math.PI / 2;
-    const t1 = 2 * Math.PI * (i + 1) / N - Math.PI / 2;
-    const tm = (t0 + t1) / 2;
-    if (i === 0) d += 'M' + f(at(1, t0)) + ' ';
-    d += 'Q' + f(at(k, tm)) + ' ' + f(at(1, t1)) + ' ';
-    const h = at(0.9, tm);
-    hearts += `<text x="${h[0].toFixed(1)}" y="${h[1].toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#E08CA5" opacity=".85">♥</text>`;
-  }
-  d += 'Z';
-  card.insertAdjacentHTML('afterbegin', `<svg class="paper" viewBox="0 0 400 500" preserveAspectRatio="none" aria-hidden="true">
-    <defs>
-      <linearGradient id="paperFill" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#FFFEFB"/>
-        <stop offset="1" stop-color="#F7F1E6"/>
-      </linearGradient>
-      <filter id="paperShadow" x="-10%" y="-10%" width="120%" height="125%">
-        <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#2F5D78" flood-opacity=".22"/>
-      </filter>
-    </defs>
-    <path d="${d}" fill="url(#paperFill)" filter="url(#paperShadow)"/>
-    ${hearts}
-  </svg>`);
-})();
+
     /* Screen 5: individual greeting */
 .bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--blush)}
 .bg::after{content:"";position:absolute;inset:0;background:rgba(252,247,240,.25)}
@@ -381,11 +350,96 @@ $('#pickNext').onclick = () => {
   go('s-greet');
 };
 
-/* ===== SCREEN 5: individual greeting ===== */
+/* ===== DRAW WHITE LACE PAPER ===== */
+
+function drawPaper() {
+  const card = document.querySelector('.lace-card');
+
+  if (!card || card.querySelector('.paper')) return;
+
+  const N = 22;
+  const cx = 200;
+  const cy = 250;
+  const rx = 186;
+  const ry = 236;
+  const k = 1.07;
+
+  const at = (r, t) => [
+    cx + rx * r * Math.cos(t),
+    cy + ry * r * Math.sin(t)
+  ];
+
+  const f = p =>
+    p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+
+  let d = '';
+  let hearts = '';
+
+  for (let i = 0; i < N; i++) {
+    const t0 = 2 * Math.PI * i / N - Math.PI / 2;
+    const t1 = 2 * Math.PI * (i + 1) / N - Math.PI / 2;
+    const tm = (t0 + t1) / 2;
+
+    if (i === 0) {
+      d += 'M' + f(at(1, t0)) + ' ';
+    }
+
+    d += 'Q' + f(at(k, tm)) + ' ' + f(at(1, t1)) + ' ';
+
+    const h = at(0.9, tm);
+
+    hearts += `<text
+      x="${h[0].toFixed(1)}"
+      y="${h[1].toFixed(1)}"
+      text-anchor="middle"
+      dominant-baseline="central"
+      font-size="13"
+      fill="#E08CA5"
+      opacity=".85">♥</text>`;
+  }
+
+  d += 'Z';
+
+  card.insertAdjacentHTML('afterbegin', `
+    <svg class="paper"
+         viewBox="0 0 400 500"
+         preserveAspectRatio="none"
+         aria-hidden="true">
+
+      <defs>
+        <linearGradient id="paperFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#FFFEFB"/>
+          <stop offset="1" stop-color="#F7F1E6"/>
+        </linearGradient>
+
+        <filter id="paperShadow"
+                x="-10%" y="-10%"
+                width="120%" height="125%">
+          <feDropShadow
+            dx="0" dy="6"
+            stdDeviation="7"
+            flood-color="#2F5D78"
+            flood-opacity=".22"/>
+        </filter>
+      </defs>
+
+      <path d="${d}"
+            fill="url(#paperFill)"
+            filter="url(#paperShadow)"/>
+
+      ${hearts}
+    </svg>
+  `);
+}
+
+
+  /* ===== SCREEN 5: individual greeting ===== */
 function renderGreet() {
   const p = PEOPLE[state.idx], t = TONES[state.idx % TONES.length];
   const grad = `linear-gradient(135deg, ${t[0]}, ${t[1]})`;
   const bg = $('#greetBg');
+  drawPaper();
+  
   bg.style.backgroundImage = grad;
   if (p.image) {
     // Fall back to the gradient silently if the photo fails to load.
