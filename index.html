@@ -222,6 +222,7 @@ const PEOPLE = [
 
 const TONES = [['#F6C6D2', '#BFE2F4'], ['#BFE2F4', '#F9D5E0'], ['#FBDDE7', '#A8D8F0']];
 const COLORS = ['#F6C6D2', '#E08CA5', '#BFE2F4', '#8CC8E8', '#FFFFFF', '#F3E3B0'];
+  const APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbyKsKl8WKwWDvpgl4jxjhtEZcxoMkmFetAuSgK1UhtnA5uNQ4iGN3RhDs4fwYnHqGnz/exec
 
 /* ===== HELPERS ===== */
 const $ = s => document.querySelector(s);
@@ -373,12 +374,12 @@ async function submit() {
   try {
     // Backend endpoint: not included in this file. Server must validate,
     // stamp the Asia/Ho_Chi_Minh time, and append one row to the private sheet.
-    const res = await fetch('/api/confessions', {
+    const res = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ sender: PEOPLE[state.idx].name, content: text })
     });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json(); if (!data.ok) throw new Error(data.error);
     sent = true;
     $('#formBlock').hidden = true;
     $('#thanksBlock').hidden = false;
