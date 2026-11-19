@@ -141,6 +141,9 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
   #s-greet{justify-content:center;align-items:center;padding:20px 4vw}
   .lace-card{width:min(390px,94vw);max-width:390px;min-height:0}
 }
+/* Screen 6: background image and Comfortaa question */
+#s-ask{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-ask h2{font-family:Comfortaa,sans-serif}
         @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -526,6 +529,20 @@ async function submit() {
   }
 }
 $('#thanksNext').onclick = () => go('s-final');
+</script>
+<script>
+/* Personalised text after each person's greeting (screen 5 → 6 → confession) */
+(function () {
+  const confessTitle = document.createElement('h2');
+  confessTitle.id = 'confessTitle';
+  confessTitle.style.fontFamily = 'Comfortaa, sans-serif';
+  document.getElementById('formBlock').prepend(confessTitle);
+  document.getElementById('doneBtn').addEventListener('click', function () {
+    const first = PEOPLE[state.idx].name.split(' ').pop();
+    document.querySelector('#s-ask h2').textContent = 'Vậy không biết cảm xúc của ' + first + ' như nào vậy ta?';
+    confessTitle.textContent = first + ' thấy thế nào?';
+  });
+})();
 </script>
 </body>
 </html>
