@@ -133,6 +133,14 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 /* Screen 4: background image and Comfortaa names */
 #s-pick{background:url('screen 1 final.jpg') center/cover no-repeat}
 #s-pick h2,#s-pick .name-opt{font-family:Comfortaa,sans-serif}
+
+/* Screen 5: card centered, width +50%, height unchanged */
+#s-greet{justify-content:center;align-items:center;padding:20px 18px}
+.lace-card{width:min(540px,90vw);max-width:540px;min-height:440px;margin:0}
+@media (max-width:700px){
+  #s-greet{justify-content:center;align-items:center;padding:20px 4vw}
+  .lace-card{width:min(390px,94vw);max-width:390px;min-height:0}
+}
         @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -253,12 +261,12 @@ Mong các anh thông cảm và bỏ qua cho ba chị em nha!`;
 
 // Fill in `image` (e.g. 'images/quan.jpg') and `greeting` for each person.
 const PEOPLE = [
-  { name: 'Lê Hồng Quân',    image: 'anh.jpg', greeting: '' },
-  { name: 'Lê Ngọc Khánh',   image: 'anh.jpg', greeting: 'Chúc Khánh luôn thông minh, sáng suốt, biết cách sử dụng trí thông minh đúng lúc và đặc biệt là chúc bạn tình duyên thuận lợi, bớt khổ tâm vì vấn đề tình cảm (nhắc nhẹ là sống bằng lí trí). Mong bạn ngày càng nhiều tiền hơn nữa để tặng ae những cốc trà chanh size đại như 3XL chẳng hạn.' },
-  { name: 'Lê Viết Thái Duy', image: 'anh.jpg', greeting: '' },
-  { name: 'Lê Nhật Phong',   image: 'anh.jpg', greeting: '' },
-  { name: 'Lê Văn Tú',       image: 'anh.jpg', greeting: '' },
-  { name: 'Phạm Xuân Thành', image: 'anh.jpg', greeting: '' },
+  { name: 'Lê Hồng Quân',    image: 'chúc riêng.jpg', greeting: '' },
+  { name: 'Lê Ngọc Khánh',   image: 'chúc riêng.jpg', greeting: 'Chúc Khánh luôn thông minh, sáng suốt, biết cách sử dụng trí thông minh đúng lúc và đặc biệt là chúc bạn tình duyên thuận lợi, bớt khổ tâm vì vấn đề tình cảm (nhắc nhẹ là sống bằng lí trí). Mong bạn ngày càng nhiều tiền hơn nữa để tặng ae những cốc trà chanh size đại như 3XL chẳng hạn.' },
+  { name: 'Lê Viết Thái Duy', image: 'chúc riêng.jpg', greeting: '' },
+  { name: 'Lê Nhật Phong',   image: 'chúc riêng.jpg', greeting: '' },
+  { name: 'Lê Văn Tú',       image: 'chúc riêng.jpg', greeting: '' },
+  { name: 'Phạm Xuân Thành', image: 'chúc riêng.jpg', greeting: '' },
 ];
 
 const TONES = [['#F6C6D2', '#BFE2F4'], ['#BFE2F4', '#F9D5E0'], ['#FBDDE7', '#A8D8F0']];
