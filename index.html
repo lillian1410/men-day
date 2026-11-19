@@ -113,7 +113,7 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 }
     /* Screen 1: photo background and photo envelope */
 #s-letter{background:url('screen 1 final.jpg') center/cover no-repeat}
-.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('screen1b.jpg') center/cover no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
+.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('Screen 1b.jpg') center/cover no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
 .env > div{display:none}
 .env.open{transform:scale(1.06);opacity:0}
 
@@ -153,6 +153,9 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 #s-final{background:url('screen 1 final.jpg') center/cover no-repeat}
 #s-final .card{background:var(--paper);box-shadow:0 14px 40px rgba(47,93,120,.18)}
 #s-final *{font-family:Comfortaa,sans-serif}
+
+/* Screen 5: buttons sit below the paper, same row */
+#s-greet .lace-card .row{position:absolute;left:0;right:0;top:calc(100% + 16px);margin:0;min-height:0}
         @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -227,8 +230,8 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
     <div class="orn"></div>
     <h2>Các anh tài có muốn thổ lộ tình cảm gì với ba chị đẹp hong?</h2>
     <div class="row">
-      <button class="dodge alt" id="noAsk">Đéo</button>
-      <button id="yesAsk">Có aaa</button>
+      <button class="dodge alt" id="noAsk">Chả nghĩ gì</button>
+      <button id="yesAsk">Đây để viết cho nè</button>
     </div>
   </div>
 </section>
