@@ -110,6 +110,11 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
   .lace-card{width:min(64vw,260px);max-width:260px;min-height:0;padding:50px 26px 56px}
   .lace-card .greet-msg{font-size:1rem}
 }
+    /* Screen 1: photo background and photo envelope */
+#s-letter{background:url('Screen 1.jpg') center/cover no-repeat}
+.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('Screen 1b.jpg') center/cover no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
+.env > div{display:none}
+.env.open{transform:scale(1.06);opacity:0}
     @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
