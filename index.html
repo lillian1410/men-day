@@ -112,18 +112,23 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
   .lace-card .greet-msg{font-size:1rem}
 }
     /* Screen 1: photo background and photo envelope */
-#s-letter{background:url('screen 1 final.jpg') center/cover no-repeat}
-.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('Screen 1b.jpg') center/cover no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
+#s-letter{background:url('screen1final.jpg') center/cover no-repeat}
+.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('screen1b.jpg') center/cover no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
 .env > div{display:none}
 .env.open{transform:scale(1.06);opacity:0}
-    /* Screen 1: letter frame from image, Comfortaa text */
-.letter-card{background:var(--paper);box-shadow:0 14px 40px rgba(47,93,120,.18);border-radius:20px;padding:30px 24px}
 
-.letter-card .letter-text{font-family:Comfortaa,sans-serif;font-size:1rem;line-height:1.8;color:var(--deep)}
-.letter-card .row{margin-top:30px}
-        /* Screen 2: Comfortaa text and background image */
-#s-forgive{background:url('screen 1 final.jpg') center/cover no-repeat}
+/* Screen 1: tighter letter card so it sits level with screen 2 */
+.letter-card{padding:24px 28px}
+.letter-card .letter-text{font-family:Comfortaa,sans-serif;font-size:.92rem;line-height:1.65;max-height:46vh;overflow-y:auto}
+.letter-card .row{margin-top:18px}
+
+/* Screen 2: background image and Comfortaa heading */
+#s-forgive{background:url('screen1final.jpg') center/cover no-repeat}
 #s-forgive h2{font-family:Comfortaa,sans-serif}
+
+/* Screen 3: background image and Comfortaa text */
+#s-celebrate{background:url('screen1final.jpg') center/cover no-repeat}
+.headline,.exit{font-family:Comfortaa,sans-serif}
         @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
