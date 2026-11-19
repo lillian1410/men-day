@@ -157,7 +157,63 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 /* Screen 5: buttons sit below the paper, same row */
 #s-greet .lace-card .row{position:absolute;left:0;right:0;top:calc(100% + 16px);margin:0;min-height:0}
         @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-</style>
+/* SCREEN 5: CENTER GREETING CONTENT INSIDE THE PAPER */
+.lace-card {
+  height: 528px;
+  min-height: 528px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 42px 72px;
+  box-sizing: border-box;
+}
+
+.lace-card .orn {
+  margin-bottom: 18px;
+}
+
+#s-greet #greetName {
+  width: 78%;
+  margin: 0 0 14px;
+  text-align: center;
+}
+
+#s-greet #greetMsg {
+  width: 78%;
+  max-width: 78%;
+  min-height: 0;
+  max-height: 230px;
+  margin: 0;
+  padding: 0 4px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.6;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* MOBILE */
+@media (max-width:700px) {
+  .lace-card {
+    height: min(118vw, 460px);
+    min-height: 0;
+    padding: 50px 26px 56px;
+  }
+
+  #s-greet #greetName,
+  #s-greet #greetMsg {
+    width: 78%;
+    max-width: 78%;
+  }
+
+  #s-greet #greetMsg {
+    max-height: 180px;
+    font-size: 0.9rem;
+  }
+}
+    </style>
 </head>
 <body>
 <canvas id="confetti" aria-hidden="true"></canvas>
