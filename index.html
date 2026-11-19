@@ -160,12 +160,18 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 /* SCREEN 5: BALANCED GREETING LAYOUT */
 
 .lace-card {
-  position: relative;
-  display: block;
   height: 528px;
   min-height: 528px;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 42px 72px;
   box-sizing: border-box;
+}
+
+.lace-card .orn {
+  margin-bottom: 18px;
 }
 
 /* Name stays above the greeting */
@@ -182,27 +188,18 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 
 /* Greeting is centered independently */
 #s-greet #greetMsg {
-  position: absolute;
-  top: 53%;
-  left: 11%;
   width: 78%;
-  height: 42%;
-  max-height: 42%;
+  max-width: 78%;
   min-height: 0;
+  max-height: 230px;
   margin: 0;
-  padding: 0 5px;
+  padding: 0 4px;
   box-sizing: border-box;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   text-align: center;
-  font-family: 'Comfortaa', sans-serif;
   line-height: 1.6;
-
   overflow-y: auto;
   overflow-wrap: break-word;
+  word-break: normal;
 }
 
 /* MOBILE */
@@ -210,20 +207,17 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
   .lace-card {
     height: min(118vw, 460px);
     min-height: 0;
+    padding: 50px 26px 56px;
   }
 
-  #s-greet #greetName {
-    top: 17%;
-    left: 11%;
+  #s-greet #greetName,
+  #s-greet #greetMsg {
     width: 78%;
+    max-width: 78%;
   }
 
   #s-greet #greetMsg {
-    top: 53%;
-    left: 11%;
-    width: 78%;
-    height: 40%;
-    max-height: 40%;
+    max-height: 180px;
     font-size: 0.9rem;
   }
 }
