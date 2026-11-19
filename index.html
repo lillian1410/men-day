@@ -157,41 +157,52 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 /* Screen 5: buttons sit below the paper, same row */
 #s-greet .lace-card .row{position:absolute;left:0;right:0;top:calc(100% + 16px);margin:0;min-height:0}
         @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-/* SCREEN 5: CENTER GREETING CONTENT INSIDE THE PAPER */
+/* SCREEN 5: BALANCED GREETING LAYOUT */
+
 .lace-card {
+  position: relative;
+  display: block;
   height: 528px;
   min-height: 528px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Name stays above the greeting */
+#s-greet #greetName {
+  position: absolute;
+  top: 17%;
+  left: 11%;
+  width: 78%;
+  margin: 0;
+  text-align: center;
+  font-family: 'Brittany', cursive;
+  font-weight: normal;
+}
+
+/* Greeting is centered independently */
+#s-greet #greetMsg {
+  position: absolute;
+  top: 53%;
+  left: 11%;
+  width: 78%;
+  height: 42%;
+  max-height: 42%;
+  min-height: 0;
+  margin: 0;
+  padding: 0 5px;
+  box-sizing: border-box;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 64px 42px 72px;
-  box-sizing: border-box;
-}
 
-.lace-card .orn {
-  margin-bottom: 18px;
-}
-
-#s-greet #greetName {
-  width: 78%;
-  margin: 0 0 14px;
   text-align: center;
-}
-
-#s-greet #greetMsg {
-  width: 78%;
-  max-width: 78%;
-  min-height: 0;
-  max-height: 230px;
-  margin: 0;
-  padding: 0 4px;
-  box-sizing: border-box;
-  text-align: center;
+  font-family: 'Comfortaa', sans-serif;
   line-height: 1.6;
+
   overflow-y: auto;
   overflow-wrap: break-word;
-  word-break: normal;
 }
 
 /* MOBILE */
@@ -199,17 +210,20 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
   .lace-card {
     height: min(118vw, 460px);
     min-height: 0;
-    padding: 50px 26px 56px;
   }
 
-  #s-greet #greetName,
-  #s-greet #greetMsg {
+  #s-greet #greetName {
+    top: 17%;
+    left: 11%;
     width: 78%;
-    max-width: 78%;
   }
 
   #s-greet #greetMsg {
-    max-height: 180px;
+    top: 53%;
+    left: 11%;
+    width: 78%;
+    height: 40%;
+    max-height: 40%;
     font-size: 0.9rem;
   }
 }
