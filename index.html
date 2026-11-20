@@ -714,7 +714,7 @@ $('#thanksNext').onclick = () => go('s-final');
   new MutationObserver(function () {
     if (thanks.hidden) return;
     clearTimeout(t1); clearTimeout(t2);
-    t1 = setTimeout(show, reduce ? 0 : 1000);
+    t1 = setTimeout(show, reduce ? 0 : 500);
   }).observe(thanks, { attributes: true, attributeFilter: ['hidden'] });
 })();
 </script>
