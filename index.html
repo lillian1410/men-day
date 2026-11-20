@@ -668,7 +668,7 @@ $('#thanksNext').onclick = () => go('s-final');
     }
   }
 
-  function start() {
+  function start() { clearTimeout(timer); timer = setTimeout(show, 2000); }   function show() {
     clearTimeout(timer);
     build();
     overlay.classList.remove('ready');
