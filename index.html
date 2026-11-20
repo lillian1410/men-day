@@ -622,41 +622,30 @@ $('#thanksNext').onclick = () => go('s-final');
 })();
 </script>
 <style>
-/* Lips overlay: rơi ngẫu nhiên */
+<style>
+/* Lips overlay: hiện mờ dần đến rõ hẳn tại vị trí ngẫu nhiên */
 #lipsOverlay{position:fixed;inset:0;display:none;overflow:hidden;z-index:60}
 #lipsOverlay.on{display:block}
 #lipsOverlay img{
   position:absolute;
-  top:-150px;
   mix-blend-mode:multiply;
   opacity:0;
-  animation:lipFall var(--dur, 4s) linear var(--delay, 0s) infinite;
+  transform:translate(-50%, -50%) rotate(var(--r, 0deg));
+  animation:lipFadeIn 1.4s ease forwards;
 }
-@keyframes lipFall{
-  0%{
-    opacity:0;
-    transform:translateY(0) rotate(var(--r0, -20deg));
-  }
-  10%{
-    opacity:.92;
-  }
-  90%{
-    opacity:.92;
-  }
-  100%{
-    opacity:0;
-    transform:translateY(calc(100vh + 250px)) rotate(var(--r1, 25deg));
-  }
+@keyframes lipFadeIn{
+  from{opacity:0}
+  to{opacity:1}
 }
 #lipsOverlay .lips-exit{position:absolute;z-index:2;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));width:max-content;margin:0 auto;padding:8px 18px;border-radius:999px;background:rgba(252,247,240,.9);font-family:Comfortaa,sans-serif;font-size:.95rem;color:var(--deep);opacity:0;transition:opacity .6s ease;pointer-events:none}
 #lipsOverlay.ready{cursor:pointer}
 #lipsOverlay.ready .lips-exit{opacity:1}
 @media (prefers-reduced-motion:reduce){
-  #lipsOverlay img{animation:none;opacity:.92;top:20%}
+  #lipsOverlay img{animation:none;opacity:1}
 }
 </style>
 <script>
-/* Lips overlay: rơi ngẫu nhiên từ trên xuống */
+/* Lips overlay: mờ dần -> rõ hẳn, kích thước gấp đôi, phủ ~60% màn hình */
 (function () {
   const thanks = document.getElementById('thanksBlock');
   const overlay = document.createElement('div');
@@ -668,29 +657,41 @@ $('#thanksNext').onclick = () => go('s-final');
 
   function build() {
     overlay.querySelectorAll('img').forEach(function (i) { i.remove(); });
-    const w = innerWidth;
-    const count = w < 600 ? 18 : 35;
+    const w = innerWidth, h = innerHeight;
+    const phone = w < 600;
+
+    // Kích thước gấp đôi bản trước (máy tính: 130–220px, điện thoại: 90–180px)
+    const minSize = phone ? 90 : 130;
+    const rangeSize = 90;
+    const avgSize = minSize + rangeSize / 2;
+
+    // Tự động tính số lượng môi cần thiết để phủ ~60% diện tích màn hình
+    const lipArea = avgSize * (avgSize * 0.68);
+    const count = Math.max(16, Math.min(70, Math.round((w * h * 0.72) / lipArea)));
+
+    // Chia lưới ngẫu nhiên có độ lệch để môi rải tự nhiên mà vẫn đảm bảo độ phủ ~60%
+    const cols = Math.max(3, Math.round(Math.sqrt(count * (w / h))));
+    const rows = Math.max(3, Math.ceil(count / cols));
 
     for (let i = 0; i < count; i++) {
       const img = document.createElement('img');
       img.src = 'moi.jpg';
       img.alt = '';
 
-      const baseSize = w < 600 ? 45 : 65;
-      const size = Math.round(baseSize + Math.random() * 45);
+      const size = Math.round(minSize + Math.random() * rangeSize);
       img.style.width = size + 'px';
 
-      img.style.left = (Math.random() * 100 - 5).toFixed(1) + '%';
+      const c = i % cols;
+      const r = Math.floor(i / cols) % rows;
+      const jitterX = (Math.random() - 0.5) * 0.85;
+      const jitterY = (Math.random() - 0.5) * 0.85;
+      const leftPx = ((c + 0.5 + jitterX) / cols) * w;
+      const topPx = ((r + 0.5 + jitterY) / rows) * h;
 
-      const r0 = Math.round((Math.random() * 2 - 1) * 35);
-      const r1 = r0 + Math.round((Math.random() * 2 - 1) * 50);
-      img.style.setProperty('--r0', r0 + 'deg');
-      img.style.setProperty('--r1', r1 + 'deg');
-
-      const dur = (3 + Math.random() * 3).toFixed(2) + 's';
-      const delay = (Math.random() * 3.5).toFixed(2) + 's';
-      img.style.setProperty('--dur', dur);
-      img.style.setProperty('--delay', delay);
+      img.style.left = Math.max(10, Math.min(w - 10, leftPx)).toFixed(1) + 'px';
+      img.style.top = Math.max(10, Math.min(h - 10, topPx)).toFixed(1) + 'px';
+      img.style.setProperty('--r', Math.round((Math.random() * 2 - 1) * 35) + 'deg');
+      img.style.animationDelay = (Math.random() * 2.6).toFixed(2) + 's';
 
       overlay.appendChild(img);
     }
@@ -704,7 +705,7 @@ $('#thanksNext').onclick = () => go('s-final');
   }
 
   function exit() {
-    if (!overlay.classList.covers('ready')) return;
+    if (!overlay.classList.contains('ready')) return;
     clearTimeout(t1); clearTimeout(t2);
     overlay.classList.remove('on', 'ready');
     go('s-final');
