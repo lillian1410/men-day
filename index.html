@@ -688,5 +688,17 @@ $('#thanksNext').onclick = () => go('s-final');
   }).observe(thanks, { attributes: true, attributeFilter: ['hidden'] });
 })();
 </script>
+<style>
+#s-celebrate{cursor:pointer}
+</style>
+<script>
+/* Screen 3: tap anywhere on the screen to exit to screen 4, the button text stays */
+(function () {
+  document.getElementById('s-celebrate').addEventListener('click', function () {
+    stopConfetti();
+    go('s-pick');
+  });
+})();
+</script>
 </body>
 </html>
