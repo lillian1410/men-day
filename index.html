@@ -801,13 +801,50 @@ $('#thanksNext').onclick = () => go('s-final');
     });
   });
   document.getElementById('denYes').onclick = function () { go('s-hoi'); };
-  document.getElementById('hoiYes').onclick = function () { go('s-nhin'); };
+  document.getElementById('hoiYes').onclick = function () { go('s-dung'); };
   document.getElementById('nhinNext').onclick = function () { go('s-so'); };
   document.getElementById('nhinArrow').onclick = function () { go('s-so'); };
   document.getElementById('s-so').addEventListener('click', function () { go('s-noi'); });
   document.getElementById('noiNo').onclick = function () { go('s-final'); };
   document.getElementById('noiYes').onclick = function () { go('s-final'); };
 })();
+</script>
+<style>
+/* Vết khoanh quanh số 2 trên màn số */
+#s-so .khoanh-so2{position:absolute;left:37.5%;top:50%;width:calc(min(22vw,30vh) * 1.6);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;overflow:visible}
+#s-so .khoanh-so2 path{fill:none;stroke:#C2415F;stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:.9}
+#s-so.active .khoanh-so2 path{animation:veKhoanh 1.2s ease forwards}
+@keyframes veKhoanh{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){#s-so.active .khoanh-so2 path{animation:none;stroke-dashoffset:0}}
+</style>
+<script>
+/* Vết khoanh quanh số 2 */
+(function () {
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'khoanh-so2');
+  svg.setAttribute('viewBox', '0 0 200 200');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.innerHTML = '<path pathLength="1" d="M100 20 C150 12 186 48 184 98 C182 150 140 186 92 182 C40 178 12 140 16 96 C20 48 58 16 110 22 C150 28 170 62 152 92"/>';
+  document.getElementById('s-so').appendChild(svg);
+})();
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+/* Màn "Đúng rồi nè": số 2 viết bằng font thư pháp */
+#s-dung .so-2{font-family:'Ma Shan Zheng',cursive;font-size:1.5em;line-height:1;color:var(--wax);display:inline-block;vertical-align:middle;margin:0 2px}
+</style>
+
+<section class="screen s-photo" id="s-dung">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Đúng rồi nè, là năm thứ <span class="so-2">2</span> rồi đóooooo</h2>
+    <div class="row"><button id="dungNext">Tiếp</button></div>
+  </div>
+</section>
+
+<script>
+/* Màn "Đúng rồi nè" → màn "Nhìn nè" */
+document.getElementById('dungNext').onclick = function () { go('s-nhin'); };
 </script>
 </body>
 </html>
