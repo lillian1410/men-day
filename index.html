@@ -136,7 +136,7 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 
 /* Screen 5: card centered, width +80%, height +20% */
 #s-greet{justify-content:center;align-items:center;padding:20px 18px}
-.lace-card{width:min(648px,92vw);max-width:648px;min-height:528px;margin:0};max-width:540px;min-height:440px;margin:0}
+.lace-card{width:min(648px,92vw);max-width:648px;min-height:528px;margin:0}
 @media (max-width:700px){
   #s-greet{justify-content:center;align-items:center;padding:20px 4vw}
   .lace-card{width:min(390px,94vw);max-width:390px;min-height:0}
@@ -371,7 +371,7 @@ $('#env').addEventListener('keydown', e => {
 });
 function openEnv() {
   const env = $('#env');
-  if (env.classList.covers('open')) return;
+  if (env.classList.contains('open')) return;
   env.classList.add('open');
   setTimeout(() => $('#envWrap').classList.add('gone'), 1500);
   setTimeout(() => {
@@ -621,7 +621,6 @@ $('#thanksNext').onclick = () => go('s-final');
   });
 })();
 </script>
-<style>
 <style>
 /* Lips overlay: hiện mờ dần đến rõ hẳn tại vị trí ngẫu nhiên */
 #lipsOverlay{position:fixed;inset:0;display:none;overflow:hidden;z-index:60}
