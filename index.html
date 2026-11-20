@@ -706,7 +706,7 @@ $('#thanksNext').onclick = () => go('s-final');
   function exit() {
     if (!overlay.classList.contains('ready')) return;
     clearTimeout(t1); clearTimeout(t2);
-    overlay.classList.remove('on', 'ready');
+    overlay.classList.remove('on', 'ready'); go('s-den'); return;
     go('s-final');
   }
 
@@ -728,6 +728,85 @@ $('#thanksNext').onclick = () => go('s-final');
     stopConfetti();
     go('s-pick');
   });
+})();
+</script>
+<style>
+/* Các màn sau môi: đến... → hỏi → Nhìn nè → số 2 và số 3 → nối tiếp */
+.s-photo{background:url('screen 1 final.jpg') center/cover no-repeat}
+.s-photo h2,.s-photo button,.s-photo .go-hint{font-family:Comfortaa,sans-serif}
+.s-arrow-btn{position:absolute;left:16px;bottom:16px;width:56px;min-height:56px;padding:0;font-size:1.8rem;line-height:1}
+#s-so{cursor:pointer}
+#s-so .go-hint{position:absolute;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));margin:0;text-align:center;font-size:.95rem;color:var(--deep);opacity:.7}
+.so-num{position:absolute;top:50%;transform:translate(-50%,-50%);mix-blend-mode:multiply;pointer-events:none}
+#so2{left:37.5%;width:min(22vw,30vh)}
+#so3{left:62.5%;width:calc(min(22vw,30vh) * 1.5)}
+#arrow{left:50%;width:calc(min(22vw,30vh) * .75)}
+</style>
+
+<section class="screen s-photo" id="s-den">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>đến...</h2>
+    <div class="row">
+      <button class="dodge alt">Lằng nhằng</button>
+      <button id="denYes">Ơ sao thế</button>
+    </div>
+  </div>
+</section>
+
+<section class="screen s-photo" id="s-hoi">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Vậy là năm nay đã là năm thứ mấy tổ chức 19/11, các anh trai có biết không ta?</h2>
+    <div class="row">
+      <button class="dodge alt">Hong bit</button>
+      <button id="hoiYes">Có aaa</button>
+    </div>
+  </div>
+</section>
+
+<section class="screen s-photo" id="s-nhin">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Nhìn nè</h2>
+    <div class="row"><button id="nhinNext">Tiếp</button></div>
+  </div>
+  <button class="s-arrow-btn" id="nhinArrow" aria-label="Chuyển tiếp">›</button>
+</section>
+
+<section class="screen s-photo" id="s-so">
+  <img class="so-num" id="so2" src="số 2.png" alt="2">
+  <img class="so-num" id="so3" src="số 3.png" alt="3">
+  <img class="so-num" id="arrow" src="mũi tên.png" alt="">
+  <p class="go-hint">Nhấn để tiếp tục</p>
+</section>
+
+<section class="screen s-photo" id="s-noi">
+  <div class="card">
+    <div class="orn"></div>
+    <h2>Các anh trai có muốn chúng ta nối tiếp chuỗi như vậy không?</h2>
+    <div class="row">
+      <button class="alt" id="noiNo">Tất nhiên rồi</button>
+      <button id="noiYes">Chắc chắn rồi</button>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Các màn sau môi: nút né chuột và chuyển màn */
+(function () {
+  document.querySelectorAll('#s-den .dodge, #s-hoi .dodge').forEach(function (btn) {
+    ['pointerenter', 'pointerdown', 'click'].forEach(function (ev) {
+      btn.addEventListener(ev, function (e) { e.preventDefault(); dodge(btn); });
+    });
+  });
+  document.getElementById('denYes').onclick = function () { go('s-hoi'); };
+  document.getElementById('hoiYes').onclick = function () { go('s-nhin'); };
+  document.getElementById('nhinNext').onclick = function () { go('s-so'); };
+  document.getElementById('nhinArrow').onclick = function () { go('s-so'); };
+  document.getElementById('s-so').addEventListener('click', function () { go('s-noi'); });
+  document.getElementById('noiNo').onclick = function () { go('s-final'); };
+  document.getElementById('noiYes').onclick = function () { go('s-final'); };
 })();
 </script>
 </body>
