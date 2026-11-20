@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=contain">
 <title>Ngày Quốc tế đàn ông</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +76,7 @@ button:disabled{opacity:.6;cursor:default;transform:none;box-shadow:none}
 
 
     /* Screen 5: individual greeting */
-.bg{position:absolute;inset:0;background-size:cover;background-position:center;background-color:var(--blush)}
+.bg{position:absolute;inset:0;background-size:contain;background-position:center;background-color:var(--blush)}
 .bg::after{
   content:none;
 }
@@ -107,13 +107,13 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 .lace-card{width:min(360px,80vw);max-width:360px;min-height:440px;padding:64px 42px 72px;margin:0}
 @media (max-width:700px){
   #s-greet{align-items:flex-end;justify-content:flex-end;padding:0 4vw 4vh}
-  #greetBg{background-size:cover;background-position:center center;background-repeat:no-repeat}
+  #greetBg{background-size:contain;background-position:center center;background-repeat:no-repeat}
   .lace-card{width:min(64vw,260px);max-width:260px;min-height:0;padding:50px 26px 56px}
   .lace-card .greet-msg{font-size:1rem}
 }
     /* Screen 1: photo background and photo envelope */
-#s-letter{background:url('screen 1 final.jpg') center/cover no-repeat}
-.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('Screen 1b.jpg') center/cover no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
+#s-letter{background:url('screen 1 final.jpg') center/contain no-repeat}
+.env{width:min(86vw,360px);aspect-ratio:735/483;background:url('Screen 1b.jpg') center/contain no-repeat;border-radius:14px;transition:transform .8s ease,opacity .8s ease}
 .env > div{display:none}
 .env.open{transform:scale(1.06);opacity:0}
 
@@ -123,15 +123,15 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 .letter-card .row{margin-top:18px}
 
 /* Screen 2: background image and Comfortaa heading */
-#s-forgive{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-forgive{background:url('screen 1 final.jpg') center/contain no-repeat}
 #s-forgive h2{font-family:Comfortaa,sans-serif}
 
 /* Screen 3: background image and Comfortaa text */
-#s-celebrate{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-celebrate{background:url('screen 1 final.jpg') center/contain no-repeat}
 .headline,.exit{font-family:Comfortaa,sans-serif}
 
 /* Screen 4: background image and Comfortaa names */
-#s-pick{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-pick{background:url('screen 1 final.jpg') center/contain no-repeat}
 #s-pick h2,#s-pick .name-opt{font-family:Comfortaa,sans-serif}
 
 /* Screen 5: card centered, width +80%, height +20% */
@@ -142,15 +142,15 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
   .lace-card{width:min(390px,94vw);max-width:390px;min-height:0}
 }
 /* Screen 6: background image and Comfortaa question */
-#s-ask{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-ask{background:url('screen 1 final.jpg') center/contain no-repeat}
 #s-ask h2{font-family:Comfortaa,sans-serif}
 
 /* Confirmation screens (input and thanks): background image and Comfortaa */
-#s-confess{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-confess{background:url('screen 1 final.jpg') center/contain no-repeat}
 #s-confess *{font-family:Comfortaa,sans-serif}
         
 /* Final screen: background image, paper card, Comfortaa text */
-#s-final{background:url('screen 1 final.jpg') center/cover no-repeat}
+#s-final{background:url('screen 1 final.jpg') center/contain no-repeat}
 #s-final .card{background:var(--paper);box-shadow:0 14px 40px rgba(47,93,120,.18)}
 #s-final *{font-family:Comfortaa,sans-serif}
 
@@ -622,18 +622,41 @@ $('#thanksNext').onclick = () => go('s-final');
 })();
 </script>
 <style>
-/* Lips overlay (thanks screen): 36 on computer, 9 on phone */
+/* Lips overlay: rơi ngẫu nhiên */
 #lipsOverlay{position:fixed;inset:0;display:none;overflow:hidden;z-index:60}
 #lipsOverlay.on{display:block}
-#lipsOverlay img{position:absolute;mix-blend-mode:multiply;opacity:0;transform:rotate(var(--r,0deg));animation:lipIn .7s ease forwards}
-@keyframes lipIn{from{opacity:0;transform:rotate(var(--r,0deg)) scale(.3)}to{opacity:.92;transform:rotate(var(--r,0deg)) scale(1)}}
+#lipsOverlay img{
+  position:absolute;
+  top:-150px;
+  mix-blend-mode:multiply;
+  opacity:0;
+  animation:lipFall var(--dur, 4s) linear var(--delay, 0s) infinite;
+}
+@keyframes lipFall{
+  0%{
+    opacity:0;
+    transform:translateY(0) rotate(var(--r0, -20deg));
+  }
+  10%{
+    opacity:.92;
+  }
+  90%{
+    opacity:.92;
+  }
+  100%{
+    opacity:0;
+    transform:translateY(calc(100vh + 250px)) rotate(var(--r1, 25deg));
+  }
+}
 #lipsOverlay .lips-exit{position:absolute;z-index:2;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));width:max-content;margin:0 auto;padding:8px 18px;border-radius:999px;background:rgba(252,247,240,.9);font-family:Comfortaa,sans-serif;font-size:.95rem;color:var(--deep);opacity:0;transition:opacity .6s ease;pointer-events:none}
 #lipsOverlay.ready{cursor:pointer}
 #lipsOverlay.ready .lips-exit{opacity:1}
-@media (prefers-reduced-motion:reduce){#lipsOverlay img{animation:none;opacity:.92}}
+@media (prefers-reduced-motion:reduce){
+  #lipsOverlay img{animation:none;opacity:.92;top:20%}
+}
 </style>
 <script>
-/* Lips overlay: 1 s after the thanks screen, 36 lips (computer) or 9 (phone), tap to go to final screen */
+/* Lips overlay: rơi ngẫu nhiên từ trên xuống */
 (function () {
   const thanks = document.getElementById('thanksBlock');
   const overlay = document.createElement('div');
@@ -645,24 +668,31 @@ $('#thanksNext').onclick = () => go('s-final');
 
   function build() {
     overlay.querySelectorAll('img').forEach(function (i) { i.remove(); });
-    const w = innerWidth, h = innerHeight;
-    const phone = w < 600;
-    const cols = 3;
-    const rows = 3;
-    const cell = Math.max(60, Math.min(w, h) / 9);
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
-        const img = document.createElement('img');
-        img.src = 'moi.jpg';
-        img.alt = '';
-        const size = (w / cols) * 3 * (0.95 + Math.random() * 0.1);
-        img.style.width = size + 'px';
-        img.style.left = ((c + 0.5) * w / cols - size / 2) + 'px';
-        img.style.top = ((r + 0.5) * h / rows - size * 0.5) + 'px';
-        img.style.setProperty('--r', Math.round((Math.random() * 2 - 1) * 35) + 'deg');
-        img.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
-        overlay.appendChild(img);
-      }
+    const w = innerWidth;
+    const count = w < 600 ? 18 : 35;
+
+    for (let i = 0; i < count; i++) {
+      const img = document.createElement('img');
+      img.src = 'moi.jpg';
+      img.alt = '';
+
+      const baseSize = w < 600 ? 45 : 65;
+      const size = Math.round(baseSize + Math.random() * 45);
+      img.style.width = size + 'px';
+
+      img.style.left = (Math.random() * 100 - 5).toFixed(1) + '%';
+
+      const r0 = Math.round((Math.random() * 2 - 1) * 35);
+      const r1 = r0 + Math.round((Math.random() * 2 - 1) * 50);
+      img.style.setProperty('--r0', r0 + 'deg');
+      img.style.setProperty('--r1', r1 + 'deg');
+
+      const dur = (3 + Math.random() * 3).toFixed(2) + 's';
+      const delay = (Math.random() * 3.5).toFixed(2) + 's';
+      img.style.setProperty('--dur', dur);
+      img.style.setProperty('--delay', delay);
+
+      overlay.appendChild(img);
     }
   }
 
