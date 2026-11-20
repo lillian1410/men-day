@@ -260,7 +260,7 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 
 <!-- SCREEN 3: celebration -->
 <section class="screen" id="s-celebrate">
-  <h1 class="headline" id="headline">Chúc mừng 6 anh tài ngày quốc tế đàn ông (Toilet's Day)</h1>
+  <h1 class="headline" id="headline">Chúc mừng 6 anh trai ngày quốc tế đàn ông (Toilet's Day)</h1>
   <button class="exit" id="exitBtn">Nhấp để thoát</button>
 </section>
 
@@ -268,7 +268,7 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 <section class="screen" id="s-pick">
   <div class="card">
     <div class="orn"></div>
-    <h2>Bạn là ai trong 6 anh tài?</h2>
+    <h2>Bạn là ai trong 6 anh trai?</h2>
     <div class="names" id="names"></div>
     <p class="msg" id="pickMsg" role="alert"></p>
     <div class="row"><button id="pickNext">Tiếp</button></div>
@@ -283,7 +283,7 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
     <h2 id="greetName"></h2>
     <p class="greet-msg" id="greetMsg"></p>
     <div class="row">
-      <button id="readBtn">Bạn đọc xong chưa</button>
+      <button id="readBtn">Bạn đọc xong chưa nè</button>
       <button id="doneBtn" class="alt" hidden>Xong rùi aaa</button>
     </div>
   </div>
@@ -293,7 +293,7 @@ textarea:focus{border-color:var(--rose);box-shadow:0 0 0 4px rgba(246,198,210,.5
 <section class="screen" id="s-ask">
   <div class="card">
     <div class="orn"></div>
-    <h2>Các anh tài có muốn thổ lộ tình cảm gì với ba chị đẹp hong?</h2>
+    <h2>Các anh trai có muốn thổ lộ tình cảm gì với ba chị đẹp hong?</h2>
     <div class="row">
       <button class="dodge alt" id="noAsk">Chả nghĩ gì</button>
       <button id="yesAsk">Đây để viết cho nè</button>
@@ -580,7 +580,7 @@ sendBtn.onclick = submit;
 async function submit() {
   const text = ta.value.trim();
   if (busy || sent) return;
-  if (!text) { err.textContent = 'Anh viết lời thổ lộ trước khi gửi nhé.'; return; }
+  if (!text) { err.textContent = 'Anh trai viết dòng cảm xúc của mình trước khi gửi nhé.'; return; }
   busy = true;
   sendBtn.disabled = true;
   sendBtn.textContent = 'Đang gửi...';
@@ -664,11 +664,11 @@ $('#thanksNext').onclick = () => go('s-final');
     const rangeSize = 90;
     const avgSize = minSize + rangeSize / 2;
 
-    // Tự động tính số lượng môi cần thiết để phủ ~60% diện tích màn hình
+    // Tự động tính số lượng môi cần thiết để phủ ~65% diện tích màn hình
     const lipArea = avgSize * (avgSize * 0.68);
     const count = Math.max(16, Math.min(70, Math.round((w * h * 0.72) / lipArea)));
 
-    // Chia lưới ngẫu nhiên có độ lệch để môi rải tự nhiên mà vẫn đảm bảo độ phủ ~60%
+    // Chia lưới ngẫu nhiên có độ lệch để môi rải tự nhiên mà vẫn đảm bảo độ phủ ~65%
     const cols = Math.max(3, Math.round(Math.sqrt(count * (w / h))));
     const rows = Math.max(3, Math.ceil(count / cols));
 
