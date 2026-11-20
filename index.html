@@ -649,7 +649,7 @@ $('#thanksNext').onclick = () => go('s-final');
     field.innerHTML = '';
     const w = innerWidth, h = innerHeight;
     const cell = Math.max(60, Math.min(w, h) / 9);
-    const cols = Math.ceil(w / cell) + 1, rows = Math.ceil(h / cell) + 1;
+    const phone = w < 600; const cols = phone ? 5 : 10; const rows = phone ? 7 : (h >= 1000 ? 8 : 7);
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const img = document.createElement('img');
@@ -695,6 +695,40 @@ $('#thanksNext').onclick = () => go('s-final');
   overlay.addEventListener('click', exit);
   new MutationObserver(() => { if (!thanks.hidden) start(); })
     .observe(thanks, { attributes: true, attributeFilter: ['hidden'] });
+})();
+</script>
+<script>
+/* Lips grid: fixed count (80 / 70 / 35), size 8x the base cell, centred */
+(function () {
+  const overlay = document.getElementById('lipsOverlay');
+  let shown = false;
+  new MutationObserver(function () {
+    const isOn = overlay.classList.contains('on');
+    if (!isOn) { shown = false; return; }
+    if (shown) return;
+    shown = true;
+    const field = overlay.querySelector('.lips-field');
+    field.innerHTML = '';
+    const w = innerWidth, h = innerHeight;
+    const phone = w < 600;
+    const cols = phone ? 5 : 10;
+    const rows = phone ? 7 : (h >= 1000 ? 8 : 7);
+    const cell = Math.max(60, Math.min(w, h) / 9);
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const img = document.createElement('img');
+        img.src = 'moi.jpg';
+        img.alt = '';
+        const size = cell * 8 * (1 + Math.random() * 0.3);
+        img.style.width = size + 'px';
+        img.style.left = ((c + 0.5) * w / cols - size / 2) + 'px';
+        img.style.top = ((r + 0.5) * h / rows - size / 2) + 'px';
+        img.style.setProperty('--r', Math.round((Math.random() * 2 - 1) * 35) + 'deg');
+        img.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+        field.appendChild(img);
+      }
+    }
+  }).observe(overlay, { attributes: true, attributeFilter: ['class'] });
 })();
 </script>
 </body>
