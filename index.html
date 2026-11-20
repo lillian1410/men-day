@@ -621,5 +621,81 @@ $('#thanksNext').onclick = () => go('s-final');
   });
 })();
 </script>
+<style>
+/* Lips overlay on the thanks screen: fills the screen, tap anywhere to return to screen 1 */
+#lipsOverlay{position:fixed;inset:0;display:none}
+#lipsOverlay.on{display:block}
+.lips-field{position:absolute;inset:0;overflow:hidden}
+.lips-field img{position:absolute;mix-blend-mode:multiply;opacity:0;transform:rotate(var(--r,0deg));animation:lipIn .7s ease forwards}
+@keyframes lipIn{from{opacity:0;transform:rotate(var(--r,0deg)) scale(.3)}to{opacity:.92;transform:rotate(var(--r,0deg)) scale(1)}}
+.lips-exit{position:absolute;left:0;right:0;bottom:max(28px,env(safe-area-inset-bottom));width:max-content;margin:0 auto;padding:8px 18px;border-radius:999px;background:rgba(252,247,240,.9);font-family:Comfortaa,sans-serif;font-size:.95rem;color:var(--deep);opacity:0;transition:opacity .6s ease;pointer-events:none}
+#lipsOverlay.ready{cursor:pointer}
+#lipsOverlay.ready .lips-exit{opacity:1}
+@media (prefers-reduced-motion:reduce){.lips-field img{animation:none;opacity:.92}}
+</style>
+<script>
+/* Lips overlay on the thanks screen */
+(function () {
+  const thanks = document.getElementById('thanksBlock');
+  const overlay = document.createElement('div');
+  overlay.id = 'lipsOverlay';
+  overlay.innerHTML = '<div class="lips-field"></div><p class="lips-exit">Nhấn để thoát</p>';
+  document.body.appendChild(overlay);
+  const field = overlay.querySelector('.lips-field');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer = null;
+
+  function build() {
+    field.innerHTML = '';
+    const w = innerWidth, h = innerHeight;
+    const cell = Math.max(60, Math.min(w, h) / 9);
+    const cols = Math.ceil(w / cell) + 1, rows = Math.ceil(h / cell) + 1;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const img = document.createElement('img');
+        img.src = 'moi.jpg';
+        img.alt = '';
+        const size = cell * (1 + Math.random() * 0.3);
+        const jx = (Math.random() - 0.5) * cell * 0.5;
+        const jy = (Math.random() - 0.5) * cell * 0.5;
+        img.style.width = size + 'px';
+        img.style.left = (c * cell + jx - size * 0.2) + 'px';
+        img.style.top = (r * cell + jy - size * 0.2) + 'px';
+        img.style.setProperty('--r', Math.round((Math.random() * 2 - 1) * 35) + 'deg');
+        img.style.animationDelay = (Math.random() * 3).toFixed(2) + 's';
+        field.appendChild(img);
+      }
+    }
+  }
+
+  function start() {
+    clearTimeout(timer);
+    build();
+    overlay.classList.remove('ready');
+    overlay.classList.add('on');
+    timer = setTimeout(() => overlay.classList.add('ready'), reduce ? 0 : 4000);
+  }
+
+  function exit() {
+    if (!overlay.classList.contains('ready')) return;
+    overlay.classList.remove('on', 'ready');
+    const envWrap = document.getElementById('envWrap');
+    document.getElementById('env').classList.remove('open');
+    envWrap.hidden = false;
+    envWrap.classList.remove('gone');
+    document.getElementById('letterCard').classList.remove('show');
+    thanks.hidden = true;
+    document.getElementById('formBlock').hidden = false;
+    document.getElementById('ta').value = '';
+    document.getElementById('cnt').textContent = '0/2000';
+    sent = false;
+    go('s-letter');
+  }
+
+  overlay.addEventListener('click', exit);
+  new MutationObserver(() => { if (!thanks.hidden) start(); })
+    .observe(thanks, { attributes: true, attributeFilter: ['hidden'] });
+})();
+</script>
 </body>
 </html>
